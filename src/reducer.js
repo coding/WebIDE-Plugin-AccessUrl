@@ -1,35 +1,27 @@
 import { handleActions } from 'redux-actions';
-// import { combineReducers } from 'redux';
 import {
-  ENV_LIST,
-  ENV_ID,
-  ENV_OPERATING,
+  PORT_OPERATING,
+  PORT_LIST,
 } from './actions';
 
 
 export default handleActions({
-  [ENV_LIST]: (state, action) => {
-    return {
-      ...state,
-      envList: action.payload.envList || [],
-    };
-  },
-  [ENV_ID]: (state, action) => {
-    return {
-      ...state,
-      currentEnv: action.payload.currentEnv || {},
-    };
-  },
-  [ENV_OPERATING]: (state, action) => {
+  [PORT_OPERATING]: (state, action) => {
     return {
       ...state,
       operating: action.payload.operating,
       operatingMessage: action.payload.msg || '',
     };
   },
+  [PORT_LIST]: (state, action) => {
+    return {
+      ...state,
+      portList: action.payload.portList || [],
+    };
+  },
 }, {
-  envList: [],
-  currentEnv: {},
   operating: false,
   operatingMessage: '',
+  generateDisabled: false,
+  portList: []
 });

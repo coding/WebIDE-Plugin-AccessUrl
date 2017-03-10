@@ -1,0 +1,82 @@
+.access-url {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.access-url-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+  .access-url-panel {
+    .panel-heading {
+      height: 28px;
+      line-height: 28px;
+      background-color: $pane-item-background-color;
+      padding: 0 10px;
+      input {
+        line-height: 16px;
+        margin-left: 6px;
+        vertical-align: top;
+        margin-top: 2px;
+      }
+      .btn {
+        margin-left: 6px;
+        vertical-align: top;
+        margin-top: 2px;
+      }
+      .fa-refresh {
+        position: absolute;
+        top: 7px;
+        right: 10px;
+        cursor: pointer;
+        &:hover {
+          opacity: .5;
+        }
+      }
+    }
+    .panel-body {
+      position: absolute;
+      top: 28px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      overflow: auto;
+    }
+    .port-item {
+      padding: 10px;
+      border-bottom: 1px solid $pane-item-background-color;
+      position: relative;
+      display: flex;
+      .qrcode {
+        width: 27px;
+        height: 27px;
+        font-size: 30px;
+        line-height: 30px;
+        margin-right: 6px;
+      }
+      .port-content {
+        flex-grow: 1;
+        line-height: 14px;
+      }
+      .extra {
+        .fa {
+          cursor: pointer;
+        }
+      }
+    }
+    .qr-container {
+      display: none;
+      position: absolute;
+      background: #FFF
+      // padding: 5px;
+      &.show {
+        display: block;
+      }
+    }
+  }
+}

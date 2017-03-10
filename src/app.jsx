@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
 import { Provider } from 'react-redux';
-import { default as EnvList } from './EnvList';
+import { default as AccessUrl } from './AccessUrl';
 import { global } from './manager';
 
 import reducer from './reducer';
 
 
-EnvList.propTypes = {
+AccessUrl.propTypes = {
   name: PropTypes.string,
   style: PropTypes.object,
 };
@@ -14,6 +14,6 @@ export const store = global.getStoreByReducer(reducer)
 
 export default props => (
   <Provider store={store}>
-    <EnvList {...props} />
+    <AccessUrl {...props} />
   </Provider>
 );

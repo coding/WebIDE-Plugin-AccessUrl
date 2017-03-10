@@ -5,74 +5,46 @@ import { global } from './manager';
 
 const { notify, NOTIFY_TYPE } = global.sdk.Notify;
 
-export const ENV_OPERATING = 'ENV_OPERATING';
-export const envOperating = createAction(ENV_OPERATING);
+export const PORT_OPERATING = 'PORT_OPERATING';
+export const portOperating = createAction(PORT_OPERATING);
 export function setOperating({ operating, msg }) {
-  return dispatch => dispatch(envOperating({ operating, msg }));
+  return dispatch => dispatch(portOperating({ operating, msg }));
 }
 
-export const ENV_LIST = 'ENV_LIST';
-export const updateEnvList = createAction(ENV_LIST);
-export function envList() {
-  return dispatch => api.envList().then((res) => {
-    dispatch(updateEnvList({ envList: res }));
-  });
-}
-
-export const ENV_ID = 'ENV_ID';
-export const updateEnvId = createAction(ENV_ID);
-export function envId() {
-  return dispatch => api.envId().then((res) => {
-    dispatch(updateEnvId({ currentEnv: res }));
-  });
-}
-
-export function envReset() {
+export const PORT_LIST = 'PORT_LIST';
+export const updatePortList = createAction(PORT_LIST);
+export function listPorts() {
   return (dispatch) => {
-    dispatch(envOperating({ operating: true, msg: 'Resetting Environment...' }));
-    api.envReset()
+    api.listPorts()
       .then((res) => {
-        dispatch(envOperating({ operating: false }));
-        notify({ message: 'Reset success!' });
+        dispatch(updatePortList({ portList: res }));
       })
-      .catch((err) => {
-        dispatch(envOperating({ operating: false }));
-        notify({ message: `Reset failed: ${err.msg}` });
-      });
-  };
+  }
 }
 
-export function envSave({ name }) {
+export function createPort({ port }) {
   return (dispatch) => {
-    dispatch(envOperating({ operating: true, msg: 'Saving Environment...' }));
-    api.envSave({ name })
+    dispatch(portOperating({ operating: true }));
+    api.createPort({ port })
       .then((res) => {
         if (res.error) {
           notify({
             notifyType: NOTIFY_TYPE.ERROR,
-            message: `Save failed: ${res.msg}`,
+            message: `Create failed: ${res.msg}`,
           });
         } else {
-          notify({ message: 'Save success!' });
+          notify({ message: 'Create success!' });
         }
-        dispatch(envList());
-        dispatch(envId());
-        dispatch(envOperating({ operating: false }));
+        dispatch(listPorts());
+        dispatch(portOperating({ operating: false }));
       })
-      .catch((res) => {
-        dispatch(envOperating({ operating: false }));
-        notify({
-          notifyType: NOTIFY_TYPE.ERROR,
-          message: `Save failed: ${res.msg}`,
-        });
-      });
-  };
+  }
 }
 
-export function envDelete({ name }) {
+export function deletePort({ port }) {
   return (dispatch) => {
-    dispatch(envOperating({ operating: true, msg: 'Deleting Environment...' }));
-    api.envDelete({ name })
+    dispatch(portOperating({ operating: true }));
+    api.deletePort({ port })
       .then((res) => {
         if (res.error) {
           notify({
@@ -82,44 +54,9 @@ export function envDelete({ name }) {
         } else {
           notify({ message: 'Delete success!' });
         }
-        dispatch(envList());
-        dispatch(envId());
-        dispatch(envOperating({ operating: false }));
+        dispatch(listPorts());
+        dispatch(portOperating({ operating: false }));
       })
-      .catch((res) => {
-        dispatch(envOperating({ operating: false }));
-        notify({
-          notifyType: NOTIFY_TYPE.ERROR,
-          message: `Delete failed: ${res.msg}`,
-        });
-      });
-  };
-}
-
-export function envSwitch({ name }) {
-  return (dispatch) => {
-    dispatch(envOperating({ operating: true, msg: 'Switching Environment...' }));
-    api.envSwitch({ name })
-      .then((res) => {
-        if (res.error) {
-          notify({
-            notifyType: NOTIFY_TYPE.ERROR,
-            message: `Switch failed: ${res.msg}`,
-          });
-        } else {
-          notify({ message: 'Switch success!' });
-        }
-        dispatch(envList());
-        dispatch(envId());
-        dispatch(envOperating({ operating: false }));
-      })
-      .catch((res) => {
-        dispatch(envOperating({ operating: false }));
-        notify({
-          notifyType: NOTIFY_TYPE.ERROR,
-          message: `Switch failed: ${res.msg}`,
-        });
-      });
-  };
+  }
 }
 
