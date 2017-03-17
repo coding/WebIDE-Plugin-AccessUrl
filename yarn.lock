@@ -1332,9 +1332,9 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "http://registry.npm.taobao.org/code-point-at/download/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
 
-"codingSDK@ssh://git@github.com/blizzardzheng/WebIDE-Plugin-SDK.git":
+"codingSDK@https://git@github.com/blizzardzheng/WebIDE-Plugin-SDK.git":
   version "0.0.1-alpha.3"
-  resolved "ssh://git@github.com/blizzardzheng/WebIDE-Plugin-SDK.git#19e8e38de406b47fc726a769e3dd5c4352d9f00d"
+  resolved "https://git@github.com/blizzardzheng/WebIDE-Plugin-SDK.git#19e8e38de406b47fc726a769e3dd5c4352d9f00d"
   dependencies:
     babel-preset-env "^1.1.8"
     babel-runtime "^6.11.6"
