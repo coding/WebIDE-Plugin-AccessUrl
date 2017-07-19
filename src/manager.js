@@ -6,10 +6,21 @@ export const global = new APP({
   pkgId: 'coding_web_ide_plugin',
 });
 
-
+const { injectComponent } = global;
 export default class {
   pluginWillMount() {
-    console.log('this plugin will Mount');
+      console.log('this plugin will Moun');
+      injectComponent.addComToSideBar('right', {
+      text: 'Access URL',
+      icon: 'fa fa-external-link',
+      key: 'access-url',
+      onSidebarActive: () => {
+        console.log('Access URL is active');
+      },
+      onSidebarDeactive: () => {
+        console.log('Access URL is deactive');
+      },
+    }, extension =>  extension.app);
   }
   pluginOnActive() {
 
