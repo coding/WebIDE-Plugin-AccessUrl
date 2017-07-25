@@ -1,0 +1,16 @@
+{
+   "sidebar": "Access URL",
+   "port": "Port",
+   "generate": "Generate",
+   "handleDelete": {
+      "header": "Are you sure to delete this port?",
+      "message": "You're trying to delete port {port}",
+      "okText": "Delete"
+   },
+   "message": {
+      "createFailed": "Create failed: {msg}",
+      "createSuccess": "Create success!",
+      "deleteFailed": "Delete failed: {msg}",
+      "deleteSuccess": "Delete success!"
+   }
+}

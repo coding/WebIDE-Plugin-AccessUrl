@@ -3,6 +3,7 @@ import { createAction } from 'redux-actions';
 import * as api from './api';
 import { global } from './manager';
 
+const i18n = global.i18n;
 const { notify, NOTIFY_TYPE } = global.sdk.Notify;
 
 export const PORT_OPERATING = 'PORT_OPERATING';
@@ -18,8 +19,8 @@ export function listPorts() {
     api.listPorts()
       .then((res) => {
         dispatch(updatePortList({ portList: res }));
-      })
-  }
+      });
+  };
 }
 
 export function createPort({ port }) {
@@ -30,15 +31,15 @@ export function createPort({ port }) {
         if (res.error) {
           notify({
             notifyType: NOTIFY_TYPE.ERROR,
-            message: `Create failed: ${res.msg}`,
+            message: i18n`global.message.createFailed${{ msg: res.msg }}`,
           });
         } else {
-          notify({ message: 'Create success!' });
+          notify({ message: i18n`global.message.createSuccess` });
         }
         dispatch(listPorts());
         dispatch(portOperating({ operating: false }));
-      })
-  }
+      });
+  };
 }
 
 export function deletePort({ port }) {
@@ -49,14 +50,14 @@ export function deletePort({ port }) {
         if (res.error) {
           notify({
             notifyType: NOTIFY_TYPE.ERROR,
-            message: `Delete failed: ${res.msg}`,
+            message: i18n`global.message.deleteFailed${{ msg: res.msg }}`,
           });
         } else {
-          notify({ message: 'Delete success!' });
+          notify({ message: i18n`global.message.deleteSuccess` });
         }
         dispatch(listPorts());
         dispatch(portOperating({ operating: false }));
-      })
-  }
+      });
+  };
 }
 

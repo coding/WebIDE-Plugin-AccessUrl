@@ -8,6 +8,7 @@ import { global } from './manager';
 import QRCode from 'qrcode.react';
 
 const Modal = global.sdk.Modal;
+const i18n = global.i18n;
 
 class AccessUrl extends Component {
   constructor(props) {
@@ -38,10 +39,10 @@ class AccessUrl extends Component {
         <div className="access-url-container" >
           <div className="access-url-panel">
             <div className="panel-heading">
-              Port
+              {i18n`global.port`}
               <input type="number" min="0" max="65535" defaultValue="8080" ref={(input) => { this.portInput = input; }} />
               <button type="submit" className="btn btn-primary btn-xs" disabled={generateDisabled} onClick={this.handleGenerate} >
-                Generate
+              {i18n`global.generate`}             
               </button>
               <i className="fa fa-refresh" onClick={this.handleRefrash} />
             </div>
@@ -138,9 +139,9 @@ class AccessUrl extends Component {
   }
   handleDelete = async (port) => {
     var confirmed = await Modal.showModal('Confirm', {
-      header: 'Are you sure to delete this port?',
-      message: `You're trying to delete port ${port}`,
-      okText: 'Delete'
+      header: i18n`global.handleDelete.header`,
+      message: i18n`global.handleDelete.message${port}`,
+      okText: i18n`global.handleDelete.okText`
     })
     Modal.dismissModal()
     if (confirmed) {

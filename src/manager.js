@@ -1,17 +1,19 @@
 import component, { store } from './app';
 import APP from 'codingSDK/utils';
+import languagePool from '../i18n';
 
 export const global = new APP({
   subscribeDataArray: ['GitState'],
   pkgId: 'coding_web_ide_plugin',
+  i18n: { customLanguagePool: languagePool },
 });
 
-const { injectComponent } = global;
+const { injectComponent, i18n } = global;
 export default class {
   pluginWillMount() {
       console.log('this plugin will Moun');
       injectComponent.addComToSideBar('right', {
-      text: 'Access URL',
+      text: i18n`global.sidebar`,
       icon: 'fa fa-external-link',
       key: 'access-url',
       onSidebarActive: () => {

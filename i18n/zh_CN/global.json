@@ -1,0 +1,16 @@
+{
+   "sidebar": "访问链接",
+   "port": "端口",
+   "generate": "生成",
+   "handleDelete": {
+      "header": "你确定删除此端口吗",
+      "message": "你正在删除端口 {port}",
+      "okText": "删除"
+   },
+   "message": {
+      "createFailed": "创建失败: {msg}",
+      "createSuccess": "创建成功!",
+      "deleteFailed": "删除失败: {msg}",
+      "deleteSuccess": "删除成功!"
+   }
+}
