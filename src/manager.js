@@ -1,6 +1,10 @@
 import component, { store } from './app';
 import APP from 'codingSDK/utils';
-import languagePool from '../i18n';
+
+const languagePool = require('../i18n/index.json').reduce((p, v) => {
+  p[v] = require(`../i18n/${v}/index`).default
+  return p
+}, {})
 
 export const global = new APP({
   subscribeDataArray: ['GitState'],
@@ -11,7 +15,7 @@ export const global = new APP({
 const { injectComponent, i18n } = global;
 export default class {
   pluginWillMount() {
-      console.log('this plugin will Moun');
+      console.log('plugin will Mount');
       injectComponent.addComToSideBar('right', {
       text: i18n`global.sidebar`,
       icon: 'fa fa-external-link',
@@ -32,7 +36,7 @@ export default class {
    * @param  {}
    */
   pluginOnUnmount() {
-    console.log('this plugin will UnMount');
+    console.log('plugin will UnMount');
   }
   get component() {
     return component;
