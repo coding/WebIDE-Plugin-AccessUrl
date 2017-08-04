@@ -1,10 +1,12 @@
-import component, { store } from './app';
 import APP from 'codingSDK/utils';
+import Manager from 'codingSDK/Manager';
+
+import component, { store } from './app';
 
 const languagePool = require('../i18n/index.json').reduce((p, v) => {
-  p[v] = require(`../i18n/${v}/index`).default
-  return p
-}, {})
+  p[v] = require(`../i18n/${v}/index`).default;
+  return p;
+}, {});
 
 export const global = new APP({
   subscribeDataArray: ['GitState'],
@@ -13,23 +15,23 @@ export const global = new APP({
 });
 
 const { injectComponent, i18n } = global;
-export default class {
+const { position, inject } = injectComponent;
+
+export default class extends Manager {
   pluginWillMount() {
-      console.log('plugin will Mount');
-      injectComponent.addComToSideBar('right', {
+    inject(position.sideBar.right, {
       text: i18n`global.sidebar`,
       icon: 'fa fa-external-link',
       key: 'access-url',
-      onSidebarActive: () => {
-        console.log('Access URL is active');
+      actions: {
+        onSidebarActive: () => {
+          console.log('Access URL is active');
+        },
+        onSidebarDeactive: () => {
+          console.log('Access URL is deactive');
+        },
       },
-      onSidebarDeactive: () => {
-        console.log('Access URL is deactive');
-      },
-    }, extension =>  extension.app);
-  }
-  pluginOnActive() {
-
+    }, extension => extension.app);
   }
   /**
    * this will call only when plugin is unmount
