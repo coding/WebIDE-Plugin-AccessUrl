@@ -19,7 +19,7 @@ const { position, inject } = injectComponent;
 
 export default class extends Manager {
   pluginWillMount() {
-    inject(position.sideBar.right, {
+    inject(position.SIDERBAR.RIGHT, {
       text: i18n`global.sidebar`,
       icon: 'fa fa-external-link',
       key: 'access-url',
