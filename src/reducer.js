@@ -23,5 +23,5 @@ export default handleActions({
   operating: false,
   operatingMessage: '',
   generateDisabled: false,
-  portList: []
+  portList: [],
 });

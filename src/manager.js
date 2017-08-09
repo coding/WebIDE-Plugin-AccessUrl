@@ -17,9 +17,9 @@ export const global = new APP({
 const { injectComponent, i18n } = global;
 const { position, inject } = injectComponent;
 
-export default class extends Manager {
+export default class {
   pluginWillMount() {
-    inject(position.SIDERBAR.RIGHT, {
+    inject(position.SIDEBAR.RIGHT, {
       text: i18n`global.sidebar`,
       icon: 'fa fa-external-link',
       key: 'access-url',
@@ -37,7 +37,7 @@ export default class extends Manager {
    * this will call only when plugin is unmount
    * @param  {}
    */
-  pluginOnUnmount() {
+  pluginWillUnmount() {
     console.log('plugin will UnMount');
   }
   get component() {
