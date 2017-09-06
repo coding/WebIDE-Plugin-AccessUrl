@@ -39,12 +39,22 @@ class AccessUrl extends Component {
         <div className="access-url-container" >
           <div className="access-url-panel">
             <div className="panel-heading">
-              {i18n`global.port`}
-              <input type="number" min="0" max="65535" defaultValue="8080" ref={(input) => { this.portInput = input; }} />
-              <button type="submit" className="btn btn-primary btn-xs" disabled={generateDisabled} onClick={this.handleGenerate} >
-              {i18n`global.generate`}             
-              </button>
-              <i className="fa fa-refresh" onClick={this.handleRefrash} />
+              <div className="panel-title">
+                <i className="icon fa fa-external-link" />
+                {i18n`global.sidebar`}
+              </div>
+              <div className="panel-title-right">
+                {i18n`global.port`}
+                <input type="number" min="0" max="65535" defaultValue="8080" ref={(input) => { this.portInput = input; }} />
+                <label className="opt-label" onClick={(e) => {
+                  if (!generateDisabled) {
+                    this.handleGenerate(e)
+                  }
+                }}>
+                  <i className="fa fa-plus" title={i18n.get('global.generate')} />
+                </label>
+              </div>
+              <i className="fa fa-refresh" onClick={this.handleRefrash} title={i18n.get('global.refresh:=Refresh')} />
             </div>
             <div className="panel-body">
               <div className="list-group">
@@ -55,6 +65,7 @@ class AccessUrl extends Component {
                         <PortItem
                           ttl={this.formatTTL(port.ttl-this.state.ticks)}
                           node={port}
+                          key={port.token}
                           handleOpenQR={this.handleOpenQR}
                           handleCloseQR={this.handleCloseQR}
                           handleDelete={this.handleDelete}

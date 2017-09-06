@@ -2,6 +2,7 @@
    "sidebar": "Access URL",
    "port": "Port",
    "generate": "Generate",
+   "refresh": "Refresh",
    "handleDelete": {
       "header": "Are you sure to delete this port?",
       "message": "You're trying to delete port {port}",

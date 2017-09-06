@@ -2,6 +2,7 @@
    "sidebar": "访问链接",
    "port": "端口",
    "generate": "生成",
+   "refresh": "刷新",
    "handleDelete": {
       "header": "你确定删除此端口吗",
       "message": "你正在删除端口 {port}",
