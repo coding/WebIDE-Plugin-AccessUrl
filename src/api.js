@@ -14,3 +14,7 @@ export function listPorts() {
 export function deletePort({ port }) {
   return request.delete(`/hf/${config.spaceKey}`, { port });
 }
+
+export function savePort({ port }) {
+  return request.post(`/hf/${config.spaceKey}/save`, { port });
+}

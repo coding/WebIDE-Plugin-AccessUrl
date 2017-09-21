@@ -12,6 +12,11 @@
       "createFailed": "创建失败: {msg}",
       "createSuccess": "创建成功!",
       "deleteFailed": "删除失败: {msg}",
-      "deleteSuccess": "删除成功!"
-   }
+      "deleteSuccess": "删除成功!",
+      "saveFailed": "永久化失败: {msg}",
+      "saveSuccess": "永久化成功!"
+   },
+   "neverExpires": "永不过期",
+   "permanent": "转为永久",
+   "expires": "过期: "
 }

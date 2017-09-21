@@ -60,7 +60,18 @@ class AccessUrl extends Component {
               <div className="list-group">
                 {portList.length > 0 ? (
                   portList.map((port) => {
-                    if ((port.ttl-this.state.ticks) > 0) {
+                    if (port.ttl === -1) {
+                      return (
+                        <PortItem
+                          ttl={port.ttl}
+                          node={port}
+                          key={port.token}
+                          handleOpenQR={this.handleOpenQR}
+                          handleCloseQR={this.handleCloseQR}
+                          handleDelete={this.handleDelete}
+                        />
+                      )
+                    } else if ((port.ttl-this.state.ticks) > 0) {
                       return (
                         <PortItem
                           ttl={this.formatTTL(port.ttl-this.state.ticks)}
@@ -69,6 +80,7 @@ class AccessUrl extends Component {
                           handleOpenQR={this.handleOpenQR}
                           handleCloseQR={this.handleCloseQR}
                           handleDelete={this.handleDelete}
+                          handlePermanent={this.handlePermanent}
                         />
                       )
                     } else {
@@ -115,7 +127,7 @@ class AccessUrl extends Component {
     sec = ttl % 60;
     hour = Math.floor(min / 60);
     min = min % 60;
-    text = 'Expires: ';
+    text = i18n.get('global.expires');
     text += hour < 10 ? "0" + hour + ":" : hour + ":";
     text += min < 10 ? "0" + min + ":" : min + ":";
     text += sec < 10 ? "0" + sec : "" + sec;
@@ -159,17 +171,35 @@ class AccessUrl extends Component {
       this.props.actions.deletePort({ port })
     }
   }
+  handlePermanent = (e, port) => {
+    e.preventDefault()
+    this.props.actions.savePort({ port })
+  }
 }
 
-const PortItem = ({ node, handleOpenQR, handleCloseQR, handleDelete, ttl }) => {
+const PortItem = ({ node, handleOpenQR, handleCloseQR, handleDelete, handlePermanent, ttl }) => {
+  let ttlDom = ''
+  if (ttl === -1) {
+    ttlDom = <div>{i18n`global.neverExpires`}</div>
+  } else {
+    ttlDom = <div>
+      <label className="post-item-ttl">
+      {ttl}
+      </label>
+      <label className="post-item-upgrade" onClick={e => handlePermanent(e, node.port)}>
+        <i className="fa fa-clock-o" />
+        {i18n`global.permanent`}
+      </label>
+    </div>
+  }
   return (
-    <div className="port-item">
+    <div className="port-item" key={node.token}>
       <div className="qrcode">
         <i className="fa fa-qrcode" onMouseEnter={e => handleOpenQR(e, node.url)} onMouseLeave={handleCloseQR} />
       </div>
       <div className="port-content">
         <a href={node.url} target="_blank">{node.url}</a>
-        <div>{ttl}</div>
+        {ttlDom}
       </div>
       <div className="extra">
         <i className="fa fa-trash-o" onClick={handleDelete.bind(null, node.port)}/>

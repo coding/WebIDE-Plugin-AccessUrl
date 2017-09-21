@@ -12,6 +12,11 @@
       "createFailed": "Create failed: {msg}",
       "createSuccess": "Create success!",
       "deleteFailed": "Delete failed: {msg}",
-      "deleteSuccess": "Delete success!"
-   }
+      "deleteSuccess": "Delete success!",
+      "saveFailed": "Permanent failed: {msg}",
+      "saveSuccess": "Permanent success!"
+   },
+   "neverExpires": "Never Expires",
+   "permanent": "Permanent",
+   "expires": "Expires: "
 }

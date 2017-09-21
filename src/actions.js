@@ -61,3 +61,22 @@ export function deletePort({ port }) {
   };
 }
 
+export function savePort({ port }) {
+  return (dispatch) => {
+    dispatch(portOperating({ operating: true }));
+    api.savePort({ port })
+      .then((res) => {
+        if (res.error) {
+          notify({
+            notifyType: NOTIFY_TYPE.ERROR,
+            message: i18n`global.message.saveFailed${{ msg: res.msg }}`,
+          });
+        } else {
+          notify({ message: i18n`global.message.saveSuccess` });
+        }
+        dispatch(listPorts());
+        dispatch(portOperating({ operating: false }));
+      });
+  };
+}
+
