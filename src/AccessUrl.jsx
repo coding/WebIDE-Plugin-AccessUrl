@@ -180,7 +180,7 @@ class AccessUrl extends Component {
 const PortItem = ({ node, handleOpenQR, handleCloseQR, handleDelete, handlePermanent, ttl }) => {
   let ttlDom = ''
   if (ttl === -1) {
-    ttlDom = <div>{i18n`global.neverExpires`}</div>
+    ttlDom = <div className="post-item-info">{i18n`global.neverExpires`}</div>
   } else {
     ttlDom = <div className="post-item-info">
       <label className="post-item-ttl">
