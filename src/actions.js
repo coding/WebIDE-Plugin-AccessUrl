@@ -76,6 +76,12 @@ export function savePort({ port }) {
         }
         dispatch(listPorts());
         dispatch(portOperating({ operating: false }));
+      })
+      .catch((res) => {
+        notify({
+          notifyType: NOTIFY_TYPE.ERROR,
+          message: i18n`global.message.saveFailed${{ msg: res.msg }}`,
+        });
       });
   };
 }

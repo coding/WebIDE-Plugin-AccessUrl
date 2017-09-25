@@ -182,14 +182,14 @@ const PortItem = ({ node, handleOpenQR, handleCloseQR, handleDelete, handlePerma
   if (ttl === -1) {
     ttlDom = <div>{i18n`global.neverExpires`}</div>
   } else {
-    ttlDom = <div>
+    ttlDom = <div className="post-item-info">
       <label className="post-item-ttl">
       {ttl}
       </label>
-      <label className="post-item-upgrade" onClick={e => handlePermanent(e, node.port)}>
-        <i className="fa fa-clock-o" />
+      {global.sdk.config.userProfile.vip >= 4 && <button className='btn btn-primary btn-xs post-item-upgrade' onClick={e => handlePermanent(e, node.port)}>
+        <i className="fa fa-hourglass-half" />
         {i18n`global.permanent`}
-      </label>
+      </button>}
     </div>
   }
   return (
