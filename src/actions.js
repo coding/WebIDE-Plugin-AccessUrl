@@ -16,9 +16,10 @@ export const PORT_LIST = 'PORT_LIST';
 export const updatePortList = createAction(PORT_LIST);
 export function listPorts() {
   return (dispatch) => {
-    api.listPorts()
+    return api.listPorts()
       .then((res) => {
         dispatch(updatePortList({ portList: res }));
+        return res;
       });
   };
 }
@@ -26,7 +27,7 @@ export function listPorts() {
 export function createPort({ port }) {
   return (dispatch) => {
     dispatch(portOperating({ operating: true }));
-    api.createPort({ port })
+    return api.createPort({ port })
       .then((res) => {
         if (res.error) {
           notify({
@@ -36,8 +37,8 @@ export function createPort({ port }) {
         } else {
           notify({ message: i18n`global.message.createSuccess` });
         }
-        dispatch(listPorts());
         dispatch(portOperating({ operating: false }));
+        return dispatch(listPorts());
       });
   };
 }
@@ -64,7 +65,7 @@ export function deletePort({ port }) {
 export function savePort({ port }) {
   return (dispatch) => {
     dispatch(portOperating({ operating: true }));
-    api.savePort({ port })
+    return api.savePort({ port })
       .then((res) => {
         if (res.error) {
           notify({
@@ -74,8 +75,9 @@ export function savePort({ port }) {
         } else {
           notify({ message: i18n`global.message.saveSuccess` });
         }
-        dispatch(listPorts());
+        
         dispatch(portOperating({ operating: false }));
+        return dispatch(listPorts());
       })
       .catch((res) => {
         notify({

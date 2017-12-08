@@ -135,7 +135,15 @@ class AccessUrl extends Component {
   }
   handleGenerate = (e) => {
     e.preventDefault()
-    this.props.actions.createPort({ port: this.portInput.value})
+    this.props.actions.createPort({ port: this.portInput.value}).then((res) => {
+      this.setState({
+        isLoading: false,
+        ticks: 0
+      })
+      if (res.length > 0 && !this.cdInterval) {
+        this.cdInterval = setInterval(this.tick, 1000)
+      }
+    })
   }
   handleRefrash = (e) => {
     e.preventDefault()
