@@ -14,7 +14,8 @@
       "deleteFailed": "Delete failed: {msg}",
       "deleteSuccess": "Delete success!",
       "saveFailed": "Permanent failed: {msg}",
-      "saveSuccess": "Permanent success!"
+      "saveSuccess": "Permanent success!",
+      "memberInfo": "Only a diamond member can generate a permanent link"
    },
    "neverExpires": "Never Expires",
    "permanent": "Permanent",

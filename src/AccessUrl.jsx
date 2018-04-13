@@ -6,6 +6,7 @@ import * as AccessUrlActions from './actions';
 import cx from 'classnames';
 import { global } from './manager';
 import QRCode from 'qrcode.react';
+const { notify, NOTIFY_TYPE } = global.sdk.Notify;
 
 const Modal = global.sdk.Modal;
 const i18n = global.i18n;
@@ -45,7 +46,13 @@ class AccessUrl extends Component {
               </div>
               <div className="panel-title-right">
                 {i18n`global.port`}
-                <input type="number" min="0" max="65535" defaultValue="8080" ref={(input) => { this.portInput = input; }} />
+                <input type="number" min="0" max="65535" defaultValue="8080" ref={(input) => { this.portInput = input; }} onKeyDown={(e) => {
+                    if (e.keyCode === 13) {
+                      if (!generateDisabled) {
+                        this.handleGenerate(e)
+                      }
+                    }
+                  }} />
                 <label className="opt-label" onClick={(e) => {
                   if (!generateDisabled) {
                     this.handleGenerate(e)
@@ -181,7 +188,15 @@ class AccessUrl extends Component {
   }
   handlePermanent = (e, port) => {
     e.preventDefault()
-    this.props.actions.savePort({ port })
+    if (global.sdk.config.userProfile.vip >= 4) {
+      this.props.actions.savePort({ port })
+    } else {
+      notify({
+        notifyType: NOTIFY_TYPE.INFO,
+        message: <a href='https://coding.net/vip' target='_blank' rel='noopener noreferrer' >{i18n`global.message.memberInfo`}</a>,
+        dismissAfter: 10000,
+      });
+    }
   }
 }
 
@@ -194,10 +209,10 @@ const PortItem = ({ node, handleOpenQR, handleCloseQR, handleDelete, handlePerma
       <label className="post-item-ttl">
       {ttl}
       </label>
-      {global.sdk.config.userProfile.vip >= 4 && <button className='btn btn-primary btn-xs post-item-upgrade' onClick={e => handlePermanent(e, node.port)}>
+      <button className='btn btn-primary btn-xs post-item-upgrade' onClick={e => handlePermanent(e, node.port)}>
         <i className="fa fa-hourglass-half" />
         {i18n`global.permanent`}
-      </button>}
+      </button>
     </div>
   }
   return (
