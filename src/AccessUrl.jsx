@@ -2,12 +2,13 @@ import React, { Component, PropTypes } from 'react';
 var ReactDOM = require('react-dom');
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Clipboard from 'clipboard';
 import * as AccessUrlActions from './actions';
 import cx from 'classnames';
 import { global } from './manager';
 import QRCode from 'qrcode.react';
-const { notify, NOTIFY_TYPE } = global.sdk.Notify;
 
+const { notify, NOTIFY_TYPE } = global.sdk.Notify;
 const Modal = global.sdk.Modal;
 const i18n = global.i18n;
 
@@ -18,13 +19,18 @@ class AccessUrl extends Component {
       isLoading: true,
       ticks: 0,
       showQR: false,
+      port: 8080,
     }
+    this.handlePort = this.handlePort.bind(this);
+    this.handlePortIncrease = this.handlePortIncrease.bind(this);
+    this.handlePortDecrease = this.handlePortDecrease.bind(this);
+    this.handleGenerate = this.handleGenerate.bind(this);
+    this.handleCopy = this.handleCopy.bind(this);
   }
   componentWillMount () {
     this.fetch()
   }
   componentDidMount () {
-    
   }
   componentWillUnmount () {
     if (this.cdInterval) {
@@ -32,7 +38,7 @@ class AccessUrl extends Component {
       this.cdInterval = undefined
     }
   }
-  
+
   render() {
     const { portList, generateDisabled } = this.props
     return (
@@ -44,7 +50,7 @@ class AccessUrl extends Component {
                 <i className="icon fa fa-external-link" />
                 {i18n`global.sidebar`}
               </div>
-              <div className="panel-title-right">
+              {/*<div className="panel-title-right">
                 {i18n`global.port`}
                 <input type="number" min="0" max="65535" defaultValue="8080" ref={(input) => { this.portInput = input; }} onKeyDown={(e) => {
                     if (e.keyCode === 13) {
@@ -60,10 +66,27 @@ class AccessUrl extends Component {
                 }}>
                   <i className="fa fa-plus" title={i18n.get('global.generate')} />
                 </label>
-              </div>
+              </div>*/}
               <i className="fa fa-refresh" onClick={this.handleRefrash} title={i18n.get('global.refresh:=Refresh')} />
             </div>
             <div className="panel-body">
+              <div className="create-url">
+                <div className="url-tip">
+                  <span>{i18n`global.description`}</span>
+                  <a href="https://coding.net/help/doc/cloud-studio/compile.html#i-4" target="_blank">{i18n`global.help`}</a>
+                </div>
+                <div className="url-generate">
+                  <div className="port">
+                    <span>0.0.0.0&nbsp;:</span>
+                    <input type="text" value={this.state.port} onChange={this.handlePort} />
+                    <div className="change">
+                        <div className="fa fa-angle-up" onClick={this.handlePortIncrease}></div>
+                        <div className="fa fa-angle-down" onClick={this.handlePortDecrease}></div>
+                    </div>
+                  </div>
+                  <button className="btn btn-primary" onClick={this.handleGenerate}>{i18n`global.generate`}</button>
+                </div>
+              </div>
               <div className="list-group">
                 {portList.length > 0 ? (
                   portList.map((port) => {
@@ -76,6 +99,7 @@ class AccessUrl extends Component {
                           handleOpenQR={this.handleOpenQR}
                           handleCloseQR={this.handleCloseQR}
                           handleDelete={this.handleDelete}
+                          handleCopy={this.handleCopy}
                         />
                       )
                     } else if ((port.ttl-this.state.ticks) > 0) {
@@ -88,6 +112,7 @@ class AccessUrl extends Component {
                           handleCloseQR={this.handleCloseQR}
                           handleDelete={this.handleDelete}
                           handlePermanent={this.handlePermanent}
+                          handleCopy={this.handleCopy}
                         />
                       )
                     } else {
@@ -140,9 +165,44 @@ class AccessUrl extends Component {
     text += sec < 10 ? "0" + sec : "" + sec;
     return text;
   }
+
+  handlePort(e) {
+    let value = e.target.value;
+    if (value !== '') {
+        value = Number(value);
+        if (Number.isNaN(value) || value > 100000) {
+            return;
+        }
+    }
+    this.setState({port: value});
+  }
+
+  handlePortIncrease() {
+    if (this.state.port < 10000) {
+        this.setState((prevState) => ({
+            port: prevState.port + 1,
+        }));
+    }
+  }
+
+  handlePortDecrease() {
+    if (this.state.port > 0) {
+      this.setState((prevState) => ({
+          port: prevState.port - 1,
+      }));
+    }
+  }
+
+  handleCopy(url) {
+      new Clipboard('.clipboard', {
+        text: trigger => url,
+      });
+      notify({message: i18n`global.message.copySuccess`});
+  }
+
   handleGenerate = (e) => {
     e.preventDefault()
-    this.props.actions.createPort({ port: this.portInput.value}).then((res) => {
+    this.props.actions.createPort({ port: this.state.port}).then((res) => {
       this.setState({
         isLoading: false,
         ticks: 0
@@ -200,7 +260,7 @@ class AccessUrl extends Component {
   }
 }
 
-const PortItem = ({ node, handleOpenQR, handleCloseQR, handleDelete, handlePermanent, ttl }) => {
+const PortItem = ({ node, handleOpenQR, handleCloseQR, handleDelete, handleCopy, handlePermanent, ttl }) => {
   let ttlDom = ''
   if (ttl === -1) {
     ttlDom = <div className="post-item-info">{i18n`global.neverExpires`}</div>
@@ -209,10 +269,10 @@ const PortItem = ({ node, handleOpenQR, handleCloseQR, handleDelete, handlePerma
       <label className="post-item-ttl">
       {ttl}
       </label>
-      <button className='btn btn-primary btn-xs post-item-upgrade' onClick={e => handlePermanent(e, node.port)}>
+      <span className='post-item-upgrade' onClick={e => handlePermanent(e, node.port)}>
         <i className="fa fa-hourglass-half" />
         {i18n`global.permanent`}
-      </button>
+      </span>
     </div>
   }
   return (
@@ -221,10 +281,11 @@ const PortItem = ({ node, handleOpenQR, handleCloseQR, handleDelete, handlePerma
         <i className="fa fa-qrcode" onMouseEnter={e => handleOpenQR(e, node.url)} onMouseLeave={handleCloseQR} />
       </div>
       <div className="port-content">
-        <a href={node.url} target="_blank">{node.url}</a>
+        <a href={node.url} target="_blank">0.0.0.0&nbsp;:&nbsp;{node.port}</a>
         {ttlDom}
       </div>
       <div className="extra">
+        <i className="clipboard fa fa-copy" onClick={handleCopy.bind(null, node.url)}/>
         <i className="fa fa-trash-o" onClick={handleDelete.bind(null, node.port)}/>
       </div>
     </div>
@@ -237,7 +298,7 @@ const mapStateToProps = (state) => {
       generateDisabled, portList = []
     }
   } = state
-  return ({ 
+  return ({
     generateDisabled,
     portList
   });

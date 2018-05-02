@@ -3,6 +3,8 @@
    "port": "Port",
    "generate": "Generate",
    "refresh": "Refresh",
+   "description": "Access links create a link for external access for your application. Before you create an access link, map the application port you want to access to address 0.0.0.0 in the terminal. ",
+   "help": "View help",
    "handleDelete": {
       "header": "Are you sure to delete this port?",
       "message": "You're trying to delete port {port}",
@@ -13,6 +15,7 @@
       "createSuccess": "Create success!",
       "deleteFailed": "Delete failed: {msg}",
       "deleteSuccess": "Delete success!",
+      "copySuccess": "Copy success!",
       "saveFailed": "Permanent failed: {msg}",
       "saveSuccess": "Permanent success!",
       "memberInfo": "Only a diamond member can generate a permanent link"

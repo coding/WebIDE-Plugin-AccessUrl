@@ -60,24 +60,66 @@
       }
     }
     .panel-body {
+      min-width: 280px;
       position: absolute;
       top: 28px;
       bottom: 0;
       left: 0;
       right: 0;
       overflow: auto;
+      .create-url {
+        padding-bottom: 20px;
+        border-bottom: 1px solid #f5f5f5;
+        .url-tip {
+          padding: 10px;
+          line-height: 20px;
+          font-size: 12px;
+          color: #737373;
+        }
+        .url-generate {
+            display: flex;
+          .port {
+            display: flex;
+            align-items: center;
+            height: 36px;
+            padding: 0 5px 0 10px;
+            margin: 0 10px;
+            border: 2px solid #404040;
+            border-radius: 2px;
+            span {
+              color: #6e6e6e;
+            }
+            input {
+              width: 70px;
+              height: 100%;
+              margin: 0 5px;
+              border: none;
+              outline: none;
+              background-color: transparent;
+            }
+            .change {
+                display: block;
+                width: 10px;
+                .fa {
+                  width: 10px;
+                  height: 15px;
+                  line-height: 15px;
+                  cursor: pointer;
+                }
+            }
+          }
+        }
+      }
     }
     .port-item {
       padding: 10px;
       border-bottom: 1px solid $pane-item-background-color;
       position: relative;
       display: flex;
+      align-items: center;
       .qrcode {
-        width: 27px;
-        height: 27px;
-        font-size: 30px;
-        line-height: 30px;
-        margin-right: 6px;
+        font-size: 46px;
+        margin-right: 8px;
       }
       .port-content {
         flex-grow: 1;
@@ -86,12 +128,14 @@
       }
       .extra {
         .fa {
+          margin-right: 10px;
           cursor: pointer;
         }
       }
       .post-item-info {
         line-height: 22px;
         display: flex;
+        align-items: center;
         padding-top: 4px;
       }
       .post-item-ttl {
@@ -101,6 +145,7 @@
         line-height: 26px;
       }
       .post-item-upgrade {
+        color: #4377b6;
         cursor: pointer;
         .fa {
           margin-right: 4px;
