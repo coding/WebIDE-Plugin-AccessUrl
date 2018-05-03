@@ -16,6 +16,7 @@
       "deleteFailed": "删除失败: {msg}",
       "deleteSuccess": "删除成功!",
       "copySuccess": "复制成功!",
+      "copyFailed": "复制失败!",
       "saveFailed": "永久化失败: {msg}",
       "saveSuccess": "永久化成功!",
       "memberInfo": "只有钻石会员才能生成永久链接"

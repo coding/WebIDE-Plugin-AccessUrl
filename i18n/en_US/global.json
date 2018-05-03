@@ -16,6 +16,7 @@
       "deleteFailed": "Delete failed: {msg}",
       "deleteSuccess": "Delete success!",
       "copySuccess": "Copy success!",
+      "copyFailed": "Copy failed!",
       "saveFailed": "Permanent failed: {msg}",
       "saveSuccess": "Permanent success!",
       "memberInfo": "Only a diamond member can generate a permanent link"

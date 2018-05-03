@@ -25,12 +25,20 @@ class AccessUrl extends Component {
     this.handlePortIncrease = this.handlePortIncrease.bind(this);
     this.handlePortDecrease = this.handlePortDecrease.bind(this);
     this.handleGenerate = this.handleGenerate.bind(this);
-    this.handleCopy = this.handleCopy.bind(this);
   }
   componentWillMount () {
     this.fetch()
   }
   componentDidMount () {
+      const clipboard = new Clipboard('.clipboard', {
+        text: trigger => trigger.parentElement.parentElement.querySelector('.ip-content').innerText,
+      });
+      clipboard.on('success', (e) => {
+        notify({message: `${e.text} ${i18n.get('global.message.copySuccess')}`});
+      });
+      clipboard.on('error', (e) => {
+        notify({message: i18n.get('global.message.copyFailed')});
+      });
   }
   componentWillUnmount () {
     if (this.cdInterval) {
@@ -99,7 +107,6 @@ class AccessUrl extends Component {
                           handleOpenQR={this.handleOpenQR}
                           handleCloseQR={this.handleCloseQR}
                           handleDelete={this.handleDelete}
-                          handleCopy={this.handleCopy}
                         />
                       )
                     } else if ((port.ttl-this.state.ticks) > 0) {
@@ -112,7 +119,6 @@ class AccessUrl extends Component {
                           handleCloseQR={this.handleCloseQR}
                           handleDelete={this.handleDelete}
                           handlePermanent={this.handlePermanent}
-                          handleCopy={this.handleCopy}
                         />
                       )
                     } else {
@@ -193,13 +199,6 @@ class AccessUrl extends Component {
     }
   }
 
-  handleCopy(url) {
-      new Clipboard('.clipboard', {
-        text: trigger => url,
-      });
-      notify({message: i18n`global.message.copySuccess`});
-  }
-
   handleGenerate = (e) => {
     e.preventDefault()
     this.props.actions.createPort({ port: this.state.port}).then((res) => {
@@ -260,8 +259,9 @@ class AccessUrl extends Component {
   }
 }
 
-const PortItem = ({ node, handleOpenQR, handleCloseQR, handleDelete, handleCopy, handlePermanent, ttl }) => {
-  let ttlDom = ''
+const PortItem = ({ node, handleOpenQR, handleCloseQR, handleDelete, handlePermanent, ttl }) => {
+  const ip = `0.0.0.0:${node.port}`;
+  let ttlDom = '';
   if (ttl === -1) {
     ttlDom = <div className="post-item-info">{i18n`global.neverExpires`}</div>
   } else {
@@ -270,7 +270,7 @@ const PortItem = ({ node, handleOpenQR, handleCloseQR, handleDelete, handleCopy,
       {ttl}
       </label>
       <span className='post-item-upgrade' onClick={e => handlePermanent(e, node.port)}>
-        <i className="fa fa-hourglass-half" />
+        <i className="fa fa-hourglass-half"></i>
         {i18n`global.permanent`}
       </span>
     </div>
@@ -278,15 +278,15 @@ const PortItem = ({ node, handleOpenQR, handleCloseQR, handleDelete, handleCopy,
   return (
     <div className="port-item" key={node.token}>
       <div className="qrcode">
-        <i className="fa fa-qrcode" onMouseEnter={e => handleOpenQR(e, node.url)} onMouseLeave={handleCloseQR} />
+        <i className="fa fa-qrcode" onMouseEnter={e => handleOpenQR(e, node.url)} onMouseLeave={handleCloseQR}></i>
       </div>
       <div className="port-content">
-        <a href={node.url} target="_blank">0.0.0.0&nbsp;:&nbsp;{node.port}</a>
+        <a className="ip-content" href={node.url} target="_blank">{ip}</a>
         {ttlDom}
       </div>
       <div className="extra">
-        <i className="clipboard fa fa-copy" onClick={handleCopy.bind(null, node.url)}/>
-        <i className="fa fa-trash-o" onClick={handleDelete.bind(null, node.port)}/>
+        <i className="clipboard fa fa-copy"></i>
+        <i className="fa fa-trash-o" onClick={handleDelete.bind(null, node.port)}></i>
       </div>
     </div>
   )
