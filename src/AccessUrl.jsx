@@ -31,7 +31,7 @@ class AccessUrl extends Component {
   }
   componentDidMount () {
       const clipboard = new Clipboard('.clipboard', {
-        text: trigger => trigger.parentElement.parentElement.querySelector('.ip-content').innerText,
+        text: trigger => trigger.parentElement.parentElement.querySelector('.ip-content').getAttribute('href'),
       });
       clipboard.on('success', (e) => {
         notify({message: `${e.text} ${i18n.get('global.message.copySuccess')}`});
