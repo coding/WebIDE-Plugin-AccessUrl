@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 var ReactDOM = require('react-dom');
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Clipboard from 'clipboard';
+import Clipboard from 'lib/clipboard';
 import * as AccessUrlActions from './actions';
 import cx from 'classnames';
 import { global } from './manager';
@@ -237,7 +237,7 @@ class AccessUrl extends Component {
   handleDelete = async (port) => {
     var confirmed = await Modal.showModal('Confirm', {
       header: i18n`global.handleDelete.header`,
-      message: i18n`global.handleDelete.message${port}`,
+      message: i18n`global.handleDelete.message${{port}}`,
       okText: i18n`global.handleDelete.okText`
     })
     Modal.dismissModal()
