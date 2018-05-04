@@ -24,6 +24,7 @@ class AccessUrl extends Component {
     this.handlePort = this.handlePort.bind(this);
     this.handlePortIncrease = this.handlePortIncrease.bind(this);
     this.handlePortDecrease = this.handlePortDecrease.bind(this);
+    this.handleEnterGenerate = this.handleEnterGenerate.bind(this);
     this.handleGenerate = this.handleGenerate.bind(this);
   }
   componentWillMount () {
@@ -58,23 +59,6 @@ class AccessUrl extends Component {
                 <i className="icon fa fa-external-link" />
                 {i18n`global.sidebar`}
               </div>
-              {/*<div className="panel-title-right">
-                {i18n`global.port`}
-                <input type="number" min="0" max="65535" defaultValue="8080" ref={(input) => { this.portInput = input; }} onKeyDown={(e) => {
-                    if (e.keyCode === 13) {
-                      if (!generateDisabled) {
-                        this.handleGenerate(e)
-                      }
-                    }
-                  }} />
-                <label className="opt-label" onClick={(e) => {
-                  if (!generateDisabled) {
-                    this.handleGenerate(e)
-                  }
-                }}>
-                  <i className="fa fa-plus" title={i18n.get('global.generate')} />
-                </label>
-              </div>*/}
               <i className="fa fa-refresh" onClick={this.handleRefrash} title={i18n.get('global.refresh:=Refresh')} />
             </div>
             <div className="panel-body">
@@ -86,7 +70,7 @@ class AccessUrl extends Component {
                 <div className="url-generate">
                   <div className="port">
                     <span>0.0.0.0&nbsp;:</span>
-                    <input type="text" value={this.state.port} onChange={this.handlePort} />
+                    <input type="text" value={this.state.port} onChange={this.handlePort} onKeyUp={this.handleEnterGenerate} />
                     <div className="change">
                         <div className="fa fa-angle-up" onClick={this.handlePortIncrease}></div>
                         <div className="fa fa-angle-down" onClick={this.handlePortDecrease}></div>
@@ -196,6 +180,12 @@ class AccessUrl extends Component {
       this.setState((prevState) => ({
           port: prevState.port - 1,
       }));
+    }
+  }
+
+  handleEnterGenerate(e) {
+    if (e.keyCode === 13) {
+      this.handleGenerate(e);
     }
   }
 
