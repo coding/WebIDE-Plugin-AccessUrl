@@ -237,7 +237,7 @@ class AccessUrl extends Component {
   }
   handlePermanent = (e, port) => {
     e.preventDefault()
-    if (global.sdk.config.userProfile.vip >= 4) {
+    if (global.sdk.config.userProfile.vip >= 3) {
       this.props.actions.savePort({ port })
     } else {
       notify({

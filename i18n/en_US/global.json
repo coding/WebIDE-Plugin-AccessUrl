@@ -19,7 +19,7 @@
       "copyFailed": "Copy failed!",
       "saveFailed": "Permanent failed: {msg}",
       "saveSuccess": "Permanent success!",
-      "memberInfo": "Only a diamond member can generate a permanent link"
+      "memberInfo": "Only a golden member can generate a permanent link"
    },
    "neverExpires": "Never Expires",
    "permanent": "Permanent",
