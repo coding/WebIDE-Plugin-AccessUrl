@@ -6,5 +6,6 @@ const appRegistry = require('webide-plugin-sdk/utils').appRegistry;
 appRegistry({
   app,
   Manager,
+  weight: 1,
   key: 'access-url',
 });
