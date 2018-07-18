@@ -1,8 +1,10 @@
 {
    "sidebar": "访问链接",
    "port": "端口",
-   "generate": "生成",
+   "generate": "创建链接",
    "refresh": "刷新",
+   "description": "访问链接可为应用程序创建一个供外部访问的链接，创建访问链接前，请在终端（Terminal）中将需要被访问的应用程序端口映射到 0.0.0.0 地址。",
+   "help": "查看帮助",
    "handleDelete": {
       "header": "你确定删除此端口吗",
       "message": "你正在删除端口 {port}",
@@ -13,6 +15,8 @@
       "createSuccess": "创建成功!",
       "deleteFailed": "删除失败: {msg}",
       "deleteSuccess": "删除成功!",
+      "copySuccess": "复制成功!",
+      "copyFailed": "复制失败!",
       "saveFailed": "永久化失败: {msg}",
       "saveSuccess": "永久化成功!",
       "memberInfo": "只有钻石会员才能生成永久链接"
