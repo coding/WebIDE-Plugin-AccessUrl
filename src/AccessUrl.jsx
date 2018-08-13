@@ -237,15 +237,24 @@ class AccessUrl extends Component {
   }
   handlePermanent = (e, port) => {
     e.preventDefault()
-    if (global.sdk.config.userProfile.vip >= 3) {
-      this.props.actions.savePort({ port })
-    } else {
-      notify({
-        notifyType: NOTIFY_TYPE.INFO,
-        message: <a href='https://coding.net/vip' target='_blank' rel='noopener noreferrer' >{i18n`global.message.memberInfo`}</a>,
-        dismissAfter: 10000,
-      });
-    }
+    this.props.actions.savePort({ port }).then(res => {
+      if (res.code === 403) {
+        notify({
+          notifyType: NOTIFY_TYPE.INFO,
+          message: res.msg,
+          dismissAfter: 10000,
+        });
+      }
+    });
+    // if (global.sdk.config.userProfile.vip >= 3) {
+    //   this.props.actions.savePort({ port })
+    // } else {
+    // notify({
+    //   notifyType: NOTIFY_TYPE.INFO,
+    //   message: <a href='https://coding.net/vip' target='_blank' rel='noopener noreferrer' >{i18n`global.message.memberInfo`}</a>,
+    //   dismissAfter: 10000,
+    // });
+    // }
   }
 }
 
