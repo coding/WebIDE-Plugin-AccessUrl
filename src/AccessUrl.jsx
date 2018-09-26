@@ -268,10 +268,10 @@ const PortItem = ({ node, handleOpenQR, handleCloseQR, handleDelete, handlePerma
       <label className="post-item-ttl">
       {ttl}
       </label>
-      <span className='post-item-upgrade' onClick={e => handlePermanent(e, node.port)}>
+      {/* <span className='post-item-upgrade' onClick={e => handlePermanent(e, node.port)}>
         <i className="fa fa-hourglass-half"></i>
         {i18n`global.permanent`}
-      </span>
+      </span> */}
     </div>
   }
   return (
