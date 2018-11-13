@@ -25,10 +25,8 @@ export default class {
       key: 'access-url',
       actions: {
         onSidebarActive: () => {
-          console.log('Access URL is active');
         },
         onSidebarDeactive: () => {
-          console.log('Access URL is deactive');
         },
       },
     }, extension => extension.app);
@@ -38,7 +36,6 @@ export default class {
    * @param  {}
    */
   pluginWillUnmount() {
-    console.log('plugin will UnMount');
   }
   get component() {
     return component;
