@@ -65,7 +65,7 @@ class AccessUrl extends Component {
               <div className="create-url">
                 <div className="url-tip">
                   <span>{i18n`global.description`}</span>
-                  <a href="https://coding.net/help/doc/cloud-studio/compile.html#i-4" target="_blank">{i18n`global.help`}</a>
+                  <a href="https://dev.tencent.com/help/cloud-studio/access-link" target="_blank">{i18n`global.help`}</a>
                 </div>
                 <div className="url-generate">
                   <div className="port">
